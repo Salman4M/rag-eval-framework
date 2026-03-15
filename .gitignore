@@ -1,3 +1,10 @@
 .LocalRAGEval.md
 plan.md
 .venv/
+__pycache__/
+*.pyc
+datasets/raw/
+datasets/baselines/
+datasets/.reviewer_progress.json
+.env
+config.yaml

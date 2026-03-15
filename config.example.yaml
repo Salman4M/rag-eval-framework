@@ -1,0 +1,31 @@
+api:
+  base_url: "http://localhost:8000"
+  timeout: 30
+  token: ""                      # JWT token for the test user
+
+ollama:
+  base_url: "http://localhost:11434"
+  judge_model: "deepseek-r1:7b"
+  generation_model: "qwen2.5"
+  timeout: 120
+
+paths:
+  raw_pdf_dir: "datasets/raw"
+  eval_dataset: "datasets/eval_dataset.json"
+  baselines_dir: "datasets/baselines"
+  raw_candidates: "datasets/raw_candidates.json"
+  rejected: "datasets/rejected.json"
+
+generation:
+  questions_per_page: 3
+  target_dataset_size: 50
+  difficulty_mix:
+    factual: 0.5
+    reasoning: 0.35
+    multi_hop: 0.15
+
+thresholds:
+  faithfulness: 0.7
+  answer_relevancy: 0.7
+  context_precision: 0.6
+  context_recall: 0.6
