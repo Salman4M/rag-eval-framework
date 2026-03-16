@@ -78,7 +78,7 @@ def edit_in_editor(candidate:dict) -> dict | None:
 def display_candidate(candidate: dict, index: int, total:int, approved_count:int)-> None:
     difficulty_colors = {
         "factual":"cyan",
-        "reasoing":"yellow",
+        "reasoning":"yellow",
         "multi_hop":"magenta"
     }
     diff = candidate.get("difficulty","factual")
@@ -95,19 +95,19 @@ def display_candidate(candidate: dict, index: int, total:int, approved_count:int
     body.append(candidate.get("question",""),style="white")
     body.append("\n\n")
     body.append("A:", style="bold green")
-    body.append(candidate.get("excepted_answer",""),style="dim white")
+    body.append(candidate.get("expected_answer",""),style="dim white")
 
     if candidate.get("category"):
         body.append(f"\n\n[dim]category: {candidate['category']}[/dim]")
 
-    console.print(Panel(body,titl=header, border_style="dim"))
+    console.print(Panel(body,title=header, border_style="dim"))
 
 
 def display_controls() -> None:
     console.print(
         "  [bold cyan](a)[/bold cyan]pprove  "
         "[bold yellow](e)[/bold yellow]dit  "
-        "[bold red](red)[/bold red]eject  "
+        "[bold red](r)[/bold red]eject  "
         "[dim](s)[/dim]kip  "
         "[dim](q)[/dim]uit"
     )
@@ -150,7 +150,7 @@ def main() -> None:
         sys.exit(0)
 
     console.print(f"\n[bold]RAG Eval - Candidate Reviewer[/bold]")
-    console.print(f"  {len(pending)} candidates to review | {len(dataset)['cases']} already approved\n")
+    console.print(f"  {len(pending)} candidates to review | {len(dataset['cases'])} already approved\n")
 
     approved_count = len(dataset["cases"])
 
@@ -173,9 +173,10 @@ def main() -> None:
                 console.print(" [green]✓ Approved[/green]")
                 break
 
-            if choice =="e":
+            elif choice =="e":
                 edited = edit_in_editor(candidate)
                 if edited:
+                    edited["id"] = candidate["id"]
                     edited["reviewed_by"] = "human"
                     edited["approved"] = True
                     dataset["cases"].append(edited)
@@ -186,7 +187,7 @@ def main() -> None:
                     console.print(" [green]✓ Edited and Approved[/green]")
                 else:
                     console.print("  [yellow]Edit cancelled. Skipping.[/yellow]")
-                    break
+                break
 
             elif choice == "r":
                 candidate["reviewed_by"] = "human"
@@ -209,10 +210,10 @@ def main() -> None:
                 console.print(f"  Total approved: {len(dataset['cases'])}")
                 sys.exit(0)
             else:
-                console.print("  [dim]Invalid choise. Use a / e / r / s / q[dim]")
+                console.print("  [dim]Invalid choise. Use a / e / r / s / q[/dim]")
 
     save_progress({"reviewed_ids":list(reviewed_ids)})
-    console.print(f"\n[bold]All candidates reviewed![/bold green]")
+    console.print(f"\n[bold green]All candidates reviewed![/bold green]")
     console.print(f"  Total approved: {len(dataset['cases'])}")
     console.print(f"  Total rejected: {len(rejected)}")
     console.print(f"\n  evaldataset.json is ready at: {eval_path}")

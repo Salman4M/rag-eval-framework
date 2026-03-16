@@ -1,0 +1,80 @@
+[
+  {
+    "id": "case_f53acbba",
+    "question": "What does 'iv' refer to in this context?",
+    "expected_answer": "It refers to an index or table of contents.",
+    "source_document": "python_tutorial.pdf",
+    "page_number": 6,
+    "difficulty": "factual",
+    "category": "indexing",
+    "notes": "",
+    "generated_by": "deepseek-r1:7b",
+    "reviewed_by": "human",
+    "approved": false
+  },
+  {
+    "id": "case_b0af817a",
+    "question": "What does section 3.1 describe about Python?",
+    "expected_answer": "Using it as a calculator.",
+    "source_document": "python_tutorial.pdf",
+    "page_number": 3,
+    "difficulty": "factual",
+    "category": "programming_concepts",
+    "notes": "",
+    "generated_by": "deepseek-r1:7b",
+    "reviewed_by": "human",
+    "approved": false
+  },
+  {
+    "id": "case_0ca0d451",
+    "question": "What is introduced about functions in both section 4.4 and 4.7?",
+    "expected_answer": "The use of pass statements and defining functions with parameters.",
+    "source_document": "python_tutorial.pdf",
+    "page_number": 3,
+    "difficulty": "multi_hop",
+    "category": "python_programming",
+    "notes": "",
+    "generated_by": "deepseek-r1:7b",
+    "reviewed_by": "human",
+    "approved": false
+  },
+  {
+    "id": "case_216effba",
+    "question": "What is covered in Section 8.3?",
+    "expected_answer": "Raising Exceptions",
+    "source_document": "python_tutorial.pdf",
+    "page_number": 4,
+    "difficulty": "factual",
+    "category": "syntax_errors",
+    "notes": "",
+    "generated_by": "deepseek-r1:7b",
+    "reviewed_by": "human",
+    "approved": false
+  },
+  {
+    "id": "case_eca42d20",
+    "question": "Where can I find information about private variables in Python?",
+    "expected_answer": "Section 9.6",
+    "source_document": "python_tutorial.pdf",
+    "page_number": 4,
+    "difficulty": "reasoning",
+    "category": "classes",
+    "notes": "",
+    "generated_by": "deepseek-r1:7b",
+    "reviewed_by": "human",
+    "approved": false
+  },
+  {
+    "id": "case_4004bf39",
+    "question": "How is string pattern matching handled in the standard library?",
+    "expected_answer": "Section 10.5 discusses string pattern matching.",
+    "source_document": "python_tutorial.pdf",
+    "page_number": 4,
+    "difficulty": "multi_hop",
+    "category": "standard_library",
+    "notes": "",
+    "generated_by": "deepseek-r1:7b",
+    "reviewed_by": "human",
+    "approved": false
+  }
+]

@@ -17,7 +17,7 @@ def load_config() -> dict:
         return yaml.safe_load(f)
 
 
-def exctract_pages(pdf_path: Path)->list[dict]:
+def extract_pages(pdf_path: Path)->list[dict]:
     pages=[]
     with pdfplumber.open(pdf_path) as pdf:
         for i,page in enumerate(pdf.pages,start=1):
@@ -39,12 +39,13 @@ def exctract_pages(pdf_path: Path)->list[dict]:
 
 #to get rid of <think> tags in output of chain of thought in deepseek
 def strip_think_tags(raw:str) -> str:
-    cleaned=re.sub(r"<think>.*?</think>",raw,flags=re.DOTALL)
+    cleaned=re.sub(r"<think>.*?</think>","",raw,flags=re.DOTALL)
     return cleaned.strip()
 
 def extract_json_array(text:str) -> str:
+    text = re.sub(r"```json|```","",text).strip()
     start = text.find("[")
-    end = text.find("]")
+    end = text.rfind("]")
     if start == -1 or end == -1:
         raise ValueError(f"No JSON array found in model output:\n{text[:500]}")
     return text[start:end+1]
@@ -69,7 +70,7 @@ Difficulty definitions:
 
 Return ONLY a valid JSON array with no preamble, no explanations, no markdown fences.
 Each item must have exactly these keys:
-  "question","excepted_answer","difficulty","category"
+  "question","expected_answer","difficulty","category"
 
 Where "category" is a short topic label (e.g "specifications","safety","installation","overview").
 
@@ -123,14 +124,14 @@ def generate_candidates_for_page(
         if not isinstance(item,dict):
             continue
         question = item.get("question","").strip()
-        excepted_answer = item.get("excepted_answer","").strip()
-        if not question or not excepted_answer:
+        expected_answer = item.get("expected_answer","").strip()
+        if not question or not expected_answer:
             continue
 
         candidates.append({
             "id":f"case_{uuid.uuid4().hex[:8]}",
             "question":question,
-            "excepted_answer":excepted_answer,
+            "expected_answer":expected_answer,
             "source_document":source_document,
             "page_number":page["page_number"],
             "difficulty":item.get("difficulty","factual"),
@@ -155,7 +156,7 @@ def save_candidates(candidates: list[dict], path: Path) -> None:
         json.dump(candidates,f,indent=2,ensure_ascii=False)
 
 
-def parse_range_range(pages_arg:str | None, total_pages:int) -> list[int]:
+def parse_page_range(pages_arg:str | None, total_pages:int) -> list[int]:
     if not pages_arg:
         return list(range(1,total_pages + 1))
     
@@ -182,7 +183,7 @@ def main() -> None:
         help="Page range to process, e.g. '1-10' or '1,3,5'. Defaults to all pages." 
     )
     parser.add_argument(
-        "--question-per-page",
+        "--questions-per-page",
         type=int,
         default=None,
         help="Number of Q&A pairs per page. Overrides config.yaml."
@@ -205,21 +206,21 @@ def main() -> None:
         sys.exit()
 
     print(f"\n{'='*60}")
-    print(f"Generator - {[pdf_path.name]}")
+    print(f"Generator - {pdf_path.name}")
     print(f"Model: {config['ollama']['judge_model']}")
     print(f"Questions per pag: {questions_per_page}")
     print(f"\n{'='*60}")
     
     print("Exctracting pages from PDF...")
-    pages = exctract_pages(pdf_path)
+    pages = extract_pages(pdf_path)
     print(f"Found {len(pages)} non-empty pages\n")
 
     if not pages:
-        print(["[error] No text could be extracted from this PDF."])
+        print("[error] No text could be extracted from this PDF.")
         sys.exit(1)
     
     #filter to requested page range
-    requested = parse_range_range(args.pages, max(p["page_number"] for p in pages))
+    requested = parse_page_range(args.pages, max(p["page_number"] for p in pages))
     pages = [p for p in pages if p["page_number"] in requested]
     print(f"Processing {len(pages)} pages\n")
 
@@ -228,7 +229,7 @@ def main() -> None:
     new_count = 0
 
     for page in pages:
-        print(f"Page {page["page_number"]:>3} / {pages[-1]['page_number']} ... ",end="",flush=True)
+        print(f"Page {page['page_number']:>3} / {pages[-1]['page_number']} ... ",end="",flush=True)
         candidates = generate_candidates_for_page(
             page, config, questions_per_page, pdf_path.name
         )

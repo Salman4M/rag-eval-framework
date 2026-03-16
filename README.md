@@ -12,9 +12,9 @@ source .venv/bin/activate
 pip install -e .
 ```
 
-Make sure Ollama is running with deepseek-r1:7b pulled:
+Make sure Ollama is running with qwen2.5 pulled:
 ```bash
-ollama pull deepseek-r1:7b
+ollama pull qwen2.5
 ```
 
 ### 1. Drop your PDFs
@@ -28,6 +28,7 @@ python -m dataset_builder.generator --pdf datasets/raw/yourfile.pdf
 Options:
 - `--pages 1-10` — only process pages 1 through 10
 - `--questions-per-page 5` — override the default (3) from config.yaml
+- `--overwrite` — start fresh instead of appending to existing candidates
 
 Outputs to `datasets/raw_candidates.json`.
 
