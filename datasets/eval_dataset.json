@@ -3,45 +3,6 @@
   "created_at": "2026-03-16T16:26:38.119450+00:00",
   "cases": [
     {
-      "id": "case_8461201f",
-      "question": "What AI project did Mammadli Salman build using LangGraph?",
-      "expected_answer": "Mammadli Salman built a multi-tool AI agent with LangGraph.",
-      "source_document": "my.pdf",
-      "page_number": 1,
-      "difficulty": "factual",
-      "category": "AI Systems",
-      "notes": "",
-      "generated_by": "deepseek-r1:7b",
-      "reviewed_by": "human",
-      "approved": true
-    },
-    {
-      "id": "case_650dbab1",
-      "question": "Which integration did Mammadli Salman implement in his backend development work?",
-      "expected_answer": "Mammadli Salman integrated MCP protocol via fastapi-mcp.",
-      "source_document": "my.pdf",
-      "page_number": 1,
-      "difficulty": "factual",
-      "category": "Tools & DevOps",
-      "notes": "",
-      "generated_by": "deepseek-r1:7b",
-      "reviewed_by": "human",
-      "approved": true
-    },
-    {
-      "id": "case_dd306b7f",
-      "question": "How many students did Mammadli Salman mentor as a teaching assistant?",
-      "expected_answer": "60+ students across three groups in Python, SQL, Django, and Django REST Framework.",
-      "source_document": "my.pdf",
-      "page_number": 1,
-      "difficulty": "factual",
-      "category": "Teaching & Mentorship",
-      "notes": "",
-      "generated_by": "deepseek-r1:7b",
-      "reviewed_by": "human",
-      "approved": true
-    },
-    {
       "id": "case_7ec0cc83",
       "question": "What was the release date of Python 3.7.0?",
       "expected_answer": "September 2, 2018",
