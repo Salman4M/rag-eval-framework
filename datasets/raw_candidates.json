@@ -128,31 +128,5 @@
     "generated_by": "deepseek-r1:7b",
     "reviewed_by": null,
     "approved": false
-  },
-  {
-    "id": "case_2257f6ca",
-    "question": "Who contributed to the Python Documentation?",
-    "expected_answer": "Eric, Adam, and others",
-    "source_document": "python_tutorial.pdf",
-    "page_number": 5,
-    "difficulty": "reasoning",
-    "category": "Contributors",
-    "notes": "",
-    "generated_by": "deepseek-r1:7b",
-    "reviewed_by": null,
-    "approved": false
-  },
-  {
-    "id": "case_e4300e81",
-    "question": "Where can I find the license information for this document?",
-    "expected_answer": "In C.3 Licenses and Acknowledgements for Incorporated Software",
-    "source_document": "python_tutorial.pdf",
-    "page_number": 5,
-    "difficulty": "multi_hop",
-    "category": "License",
-    "notes": "",
-    "generated_by": "deepseek-r1:7b",
-    "reviewed_by": null,
-    "approved": false
   }
 ]

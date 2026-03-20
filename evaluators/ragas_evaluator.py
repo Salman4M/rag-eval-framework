@@ -102,11 +102,11 @@ def collect(config:dict, token:str)-> None:
    
     for i,case in enumerate(cases):
         print(f"[{i+1}/{len(cases)}] {case['question'][:70]}...")
-        time.sleep(3)
         api_response = ask_rag_api(case["question"],config, token)
         if not api_response:
             print(f"[!] Skipping - API call failed")
             failed+=1
+            time.sleep(30)
             continue
 
         answer = api_response.get("answer","")
@@ -130,6 +130,8 @@ def collect(config:dict, token:str)-> None:
             "contexts":contexts,
         })
         print(f"completed collected")
+        time.sleep(30)
+
 
     timestamp =  datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     staging_path = baselines_dir / f"{timestamp}_collected.json"
