@@ -1,6 +1,6 @@
 api:
   base_url: "http://localhost:8000"
-  timeout: 30
+  timeout: 120
   token: ""                      # JWT token for the test user
 
 ollama:

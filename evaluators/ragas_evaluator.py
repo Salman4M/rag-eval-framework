@@ -4,18 +4,21 @@ import os
 from datetime import datetime,timezone
 from pathlib import Path
 
+
 import time
 import httpx
 import yaml
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
 from ragas import SingleTurnSample
+from ragas.embeddings import LangchainEmbeddingsWrapper
 from ragas.llms import llm_factory
+from ragas.embeddings import embedding_factory
 from ragas.metrics._faithfulness import Faithfulness
 from ragas.metrics._answer_relevance import ResponseRelevancy
 from ragas.metrics._context_precision import LLMContextPrecisionWithoutReference
 from ragas.metrics._context_recall import ContextRecall
-
+from langchain_huggingface import HuggingFaceEmbeddings
 load_dotenv()
 
 CONFIG_PATH = Path(__file__).parent.parent / "config.yaml"
@@ -59,12 +62,18 @@ def build_ollama_llm(config:dict):
     return llm_factory(config['ollama']['judge_model'],client=client)
 
 
+def build_ollama_embeddings(config:dict):
+    embeddings = HuggingFaceEmbeddings(model_name="BAAI/bge-small-en-v1.5")
+    return LangchainEmbeddingsWrapper(embeddings=embeddings)
+
+
+
 async def score_sample(sample:SingleTurnSample,metrics: list) ->dict:
     scores = {}
     for metric in metrics:
         try:
             result = await metric.single_turn_ascore(sample)
-            scores[metric.name] = round(result,4)
+            scores[metric.name] = round(float(result),4)
         except Exception as e:
             print(f"[!] Metric {metric.name} failed: {e}")
             scores[metric.name] = None
@@ -155,10 +164,11 @@ async def score(config:dict, collected_path:Path)->None:
     print(f"  Setting up Ragas with Ollama ({config['ollama']['judge_model']})...")
 
     llm = build_ollama_llm(config)
+    embeddings = build_ollama_embeddings(config)
 
     metrics = [
         Faithfulness(llm=llm),
-        ResponseRelevancy(llm=llm),
+        ResponseRelevancy(embeddings=embeddings,llm=llm),
         LLMContextPrecisionWithoutReference(llm=llm),
         ContextRecall(llm=llm)
     ]
@@ -193,7 +203,7 @@ async def score(config:dict, collected_path:Path)->None:
     thresholds = config.get("thresholds",{}) 
     thresholds_map = {
         "faithfulness":thresholds.get("faithfulness",0.7),
-        "response_relevancy":thresholds.get("answer_relevancy",0.7),
+        "answer_relevancy":thresholds.get("answer_relevancy",0.7),
         "llm_context_precision_without_reference":thresholds.get("context_precision",0.6),
         "context_recall":thresholds.get("context_recall",0.6),
     }
