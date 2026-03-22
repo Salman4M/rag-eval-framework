@@ -63,7 +63,7 @@ def main() -> None:
         if not args.score:
             print(f"[error] --score is required for custom scores against")
             print("Usage: python runner.py --eval custom --score datasets/baselines/TIMESTAMP_collected.json")
-        sys.exit(1)
+            sys.exit(1)
 
         collected_path = Path(args.score)
         if not collected_path.exists():

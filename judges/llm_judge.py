@@ -30,7 +30,7 @@ def cosine_similarity(a: list[float],b:list[float]) -> float:
 
 
 def strip_think_tags(raw:str) -> str:
-    cleaned = re.sub(r"<think>.*?/think>","",raw, flags = re.DOTALL)
+    cleaned = re.sub(r"<think>.*?</think>","",raw, flags = re.DOTALL)
     return cleaned.strip()
 
 
@@ -50,7 +50,7 @@ def call_ollama_sync(prompt:str, config:dict) -> str:
         "model":config["ollama"]["judge_model"],
         "prompt":prompt,
         "stream":False,
-        "options":{"num_predict":512,"temperatur":0.0}
+        "options":{"num_predict":512,"temperature":0.0}
     }
     with httpx.Client(timeout=config["ollama"]["timeout"]) as client:
         response = client.post(url,json=payload)
@@ -107,7 +107,7 @@ Answer:
 Return ONLY a JSON array of 3 question strings, no preamble, no explanation:
 ["question 1", "question 2", "question 3"]"""
 
-def score_answer_relevancy(question:str, answer:str, config:dict)->dict:
+def score_answer_relevancy(question:str, answer:str, config:dict)->float:
     #generating three questions from the answer
     prompt = QUESTION_GENERATION_PROMPT.format(answer=answer)
 
@@ -194,7 +194,7 @@ Task:
 3.  Count how many statements are covered vs total statements.
 
 Return ONLY a JSON object, no preamble, no explanation:
-{{"covered":<int>, "total",<int>, "reason": "<one sentence>"}}"""
+{{"covered":<int>, "total":<int>, "reason": "<one sentence>"}}"""
 
 def score_context_recall(
         contexts:list[str], expected_answer: str, config: dict
@@ -230,6 +230,6 @@ def judge(
         "faithfulness": score_faithfulness(answer,contexts,config),
         "answer_relevancy":score_answer_relevancy(question,answer,config),
         "context_precision":score_context_precision(question,contexts,config),
-        "answer_relevancy":score_context_recall(contexts,expected_answer,config),
+        "context_recall":score_context_recall(contexts,expected_answer,config),
 
     }

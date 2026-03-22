@@ -29,7 +29,7 @@ def score(config:dict, collected_path:Path) -> Path:
 
         scores = judge(
             question=item["question"],
-            answer=item["answer"],
+            answer=item["actual_answer"],
             contexts=item["contexts"],
             expected_answer=item["expected_answer"],
             config=config
@@ -64,7 +64,7 @@ def score(config:dict, collected_path:Path) -> Path:
         for k,v in averages.items()
     }
 
-    timestamp = datetime.now(timezone.ufc).strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     output = {
         "evaluator":"custom",
         "timestamp":datetime.now(timezone.utc).isoformat(),
@@ -89,8 +89,8 @@ def score(config:dict, collected_path:Path) -> Path:
     print(f"Failed          : {failed}")
 
     for metric_name,avg in averages.items():
-        threshold = thresholds_map.get(metric,0)
-        status = "PASSED" if passed_thresholds.get(metric) else "DENIED"
+        threshold = thresholds_map.get(metric_name,0)
+        status = "PASSED" if passed_thresholds.get(metric_name) else "DENIED"
         print(f"{status} {metric_name:<45} {avg if avg is not None else 'N/A'} (threshold: {threshold})")
 
     print()
@@ -131,10 +131,10 @@ def compare(custom_path: Path, ragas_path: Path) -> None:
         else:
             delta_str = "N/A"
 
-    custom_str = f"{custom_avg:.4f}" if not custom_avg is not None else "N/A"
-    ragas_str = f"{ragas_avg: 4f}" if ragas_avg is not None else "N/A"
+        custom_str = f"{custom_avg:.4f}" if custom_avg is not None else "N/A"
+        ragas_str = f"{ragas_avg:.4f}" if ragas_avg is not None else "N/A"
 
-    print(f" {metric:<45} {custom_str:>8} {ragas_str} {delta_str:>8}")
+        print(f" {metric:<45} {custom_str:>8} {ragas_str} {delta_str:>8}")
 
 print(f"{'='*60}")
     
