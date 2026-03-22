@@ -117,7 +117,6 @@ def compare(custom_path: Path, ragas_path: Path) -> None:
     metrics = ["faithfulness", "answer_relevancy","context_precision", "context_recall"]
     ragas_metric_map = {
         "context_precision":"llm_context_precision_without_reference",
-        "answer_relevancy":"response_relevancy"
     }
 
     for metric in metrics:
