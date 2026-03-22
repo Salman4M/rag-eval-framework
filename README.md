@@ -94,7 +94,7 @@ Results saved to 'datasets/baselines/TIMESTAMP_ragas.json'.
 |-------|-------------|--------|
 | 1 | Dataset Foundation | Done |
 | 2 | Ragas + Ollama Evaluator | Done |
-| 3 | Custom Evaluator From Scratch | Pending |
+| 3 | Custom Evaluator From Scratch | Done |
 | 4 | Regression Detection | Pending |
 | 5 | CI Integration | Pending |
 | 6 | Reporting | Pending |
