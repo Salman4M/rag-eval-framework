@@ -35,6 +35,12 @@ def main() -> None:
         default=None,
         help="Path to a collected answers JSON file (Stage 2 only). Skips RAG API calls."
     )
+    parser.add_argument(
+        "--compare",
+        default=None,
+        help="Path to Ragss baseline JSON to compare custom scores against"
+    )
+
     args = parser.parse_args()
 
     config = load_config()
@@ -52,8 +58,26 @@ def main() -> None:
             collect(config,token)
 
     elif args.eval == "custom":
-        print("Custom evaluator not built yet - coming in Phase 3")
-        sys.exit(0)
+        from evaluators.custom_evaluator import score, compare
+
+        if not args.score:
+            print(f"[error] --score is required for custom scores against")
+            print("Usage: python runner.py --eval custom --score datasets/baselines/TIMESTAMP_collected.json")
+        sys.exit(1)
+
+        collected_path = Path(args.score)
+        if not collected_path.exists():
+            print(f"[error] File not found: {collected_path}")
+            sys.exit(1)
+        
+        output_path = score(config, collected_path)
+
+        if args.compare and output_path:
+            ragas_path  = Path(args.compare)
+            if not ragas_path.exists():
+                print(f"[error] Ragas baseline not found: {ragas_path}")
+                sys.exit(1)
+            compare(output_path,ragas_path)
 
 
 if __name__ == "__main__":

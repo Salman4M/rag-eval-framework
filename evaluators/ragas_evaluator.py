@@ -13,7 +13,6 @@ from openai import AsyncOpenAI
 from ragas import SingleTurnSample
 from ragas.embeddings import LangchainEmbeddingsWrapper
 from ragas.llms import llm_factory
-from ragas.embeddings import embedding_factory
 from ragas.metrics._faithfulness import Faithfulness
 from ragas.metrics._answer_relevance import ResponseRelevancy
 from ragas.metrics._context_precision import LLMContextPrecisionWithoutReference
