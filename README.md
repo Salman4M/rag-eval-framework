@@ -88,6 +88,43 @@ Results saved to 'datasets/baselines/TIMESTAMP_ragas.json'.
 
 ---
 
+
+## Phase 3 - Cusom Evaluator
+
+Rebuilds the same metrics from scratch using raw Ollama calls and cosine similarity. No Ragas dependency
+
+Score with custom judge:
+```bash
+python runner.py --eval custom --score datasets/baselines/TIMESTAMP_collected.json
+```
+
+Score and compare against Ragas baseline:
+```bash
+python runner.py --eval custom \ 
+    --score datasets/baselines/TIMESTAMP_collected.json \
+    --compare datasets/baselines/TIMESTAMP_ragas.json
+```
+
+Results saved to `datasets/baselines/TIMESTAMP_custom.json`.
+
+---
+
+## Phase 4 - Regression Dedection
+
+Diffs two Ragas baseline files and flags metric drops. Exits with code 1 on regression.
+
+```bash
+python compare.py \
+    -- baseline datasets/baselines/OLD_ragas.json \ 
+    -- current datasets/baselines/NEW_ragas.json
+```
+
+Optional - override the allowed drop threshold (default is 0.05):
+```bash
+python compare.py --baseline OLD.json --current NEW.json --threshold 0.10
+```
+
+
 ## Phases
 
 | Phase | Description | Status |
@@ -95,6 +132,6 @@ Results saved to 'datasets/baselines/TIMESTAMP_ragas.json'.
 | 1 | Dataset Foundation | Done |
 | 2 | Ragas + Ollama Evaluator | Done |
 | 3 | Custom Evaluator From Scratch | Done |
-| 4 | Regression Detection | Pending |
+| 4 | Regression Detection | Done |
 | 5 | CI Integration | Pending |
 | 6 | Reporting | Pending |
