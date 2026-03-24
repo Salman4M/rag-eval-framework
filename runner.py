@@ -27,8 +27,14 @@ def main() -> None:
     parser.add_argument(
         "--eval",
         choices=["ragas","custom"],
-        required=True,
+        required=False,
         help="Which evalutator to run"
+    )
+    parser.add_argument(
+        "--report",
+        choices=["console","html"],
+        default=None,
+        help="Generate Phase 6 report from baseline files"
     )
     parser.add_argument(
         "--score",
@@ -40,10 +46,31 @@ def main() -> None:
         default=None,
         help="Path to Ragss baseline JSON to compare custom scores against"
     )
+    parser.add_argument(
+        "--input",
+        default=None,
+        help="Path to a baseline JSON for report input (console) or output HTML path (html)"
+    )
 
     args = parser.parse_args()
 
     config = load_config()
+
+    if args.report == "console":
+        from reporters.console import run
+
+        input_path = Path(args.input) if args.input else None
+        sys.exit(run(config, input_path=input_path))
+
+    elif args.report == "html":
+        from reporters.html_reporter import run
+
+        output_path = Path(args.input) if args.input else None
+        sys.exit(run(config, output_path=output_path))
+
+    if not args.eval:
+        print("[error] Choose one mode: --eval <ragas|custom> or --report <console|html>")
+        sys.exit(1)
 
     if args.eval == "ragas":
         from evaluators.ragas_evaluator import collect,score
@@ -82,4 +109,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

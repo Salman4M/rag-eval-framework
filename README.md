@@ -155,6 +155,32 @@ python compare.py --baseline datasets/baselines/reference_ragas.json --current d
 If any metric regresses beyond the allowed drop (default `0.05`) or falls below minimum thresholds from `config.yaml`, the workflow fails.
 If `reference_ragas.json` is missing, CI automatically falls back to the previous newest `*_ragas.json` file as baseline.
 
+---
+
+## Phase 6 - Reporting
+
+Generate console report from the latest baseline:
+```bash
+python runner.py --report console
+```
+
+Generate console report from a specific file:
+```bash
+python runner.py --report console --input datasets/baselines/20260320_161451_ragas.json
+```
+
+Generate HTML report (trend + latest worst cases):
+```bash
+python runner.py --report html
+```
+
+Custom HTML output path:
+```bash
+python runner.py --report html --input reports/my_eval_report.html
+```
+
+Default HTML output: `reports/eval_report.html`
+
 
 ## Phases
 
@@ -165,4 +191,4 @@ If `reference_ragas.json` is missing, CI automatically falls back to the previou
 | 3 | Custom Evaluator From Scratch | Done |
 | 4 | Regression Detection | Done |
 | 5 | CI Integration | Done |
-| 6 | Reporting | Pending |
+| 6 | Reporting | Done |
