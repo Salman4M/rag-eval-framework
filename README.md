@@ -115,14 +115,44 @@ Diffs two Ragas baseline files and flags metric drops. Exits with code 1 on regr
 
 ```bash
 python compare.py \
-    -- baseline datasets/baselines/OLD_ragas.json \ 
-    -- current datasets/baselines/NEW_ragas.json
+    --baseline datasets/baselines/reference_ragas.json \
+    --current datasets/baselines/latest_ragas.json
 ```
 
 Optional - override the allowed drop threshold (default is 0.05):
 ```bash
 python compare.py --baseline OLD.json --current NEW.json --threshold 0.10
 ```
+
+---
+
+## Phase 5 - CI Integration (GitHub Actions)
+
+GitHub Actions only runs the baseline comparison (no RAG API, no Ollama).
+
+Workflow: `.github/workflows/eval-regression.yml`
+
+1. Run eval locally and produce a new Ragas file:
+```bash
+python runner.py --eval ragas --score datasets/baselines/TIMESTAMP_collected.json
+```
+
+2. Copy or rename the newest result to:
+```bash
+datasets/baselines/latest_ragas.json
+```
+
+3. Keep your long-term reference baseline at:
+```bash
+datasets/baselines/reference_ragas.json
+```
+
+4. Commit and push to `main`. CI runs:
+```bash
+python compare.py --baseline datasets/baselines/reference_ragas.json --current datasets/baselines/latest_ragas.json
+```
+
+If any metric regresses beyond the allowed drop (default `0.05`) or falls below minimum thresholds from `config.yaml`, the workflow fails.
 
 
 ## Phases
@@ -133,5 +163,5 @@ python compare.py --baseline OLD.json --current NEW.json --threshold 0.10
 | 2 | Ragas + Ollama Evaluator | Done |
 | 3 | Custom Evaluator From Scratch | Done |
 | 4 | Regression Detection | Done |
-| 5 | CI Integration | Pending |
+| 5 | CI Integration | Done |
 | 6 | Reporting | Pending |

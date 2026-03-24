@@ -1,0 +1,64 @@
+name: Eval Regression Check
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  compare-baselines:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install compare.py dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Select baseline files
+        id: files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BASELINE="datasets/baselines/reference_ragas.json"
+          CURRENT="datasets/baselines/latest_ragas.json"
+
+          if [[ ! -f "$BASELINE" ]]; then
+            echo "::error::Missing reference baseline: $BASELINE"
+            exit 1
+          fi
+
+          if [[ ! -f "$CURRENT" ]]; then
+            # Fallback for timestamped files if latest_ragas.json is not present.
+            CURRENT="$(ls -1 datasets/baselines/*_ragas.json 2>/dev/null | sort | tail -n 1 || true)"
+          fi
+
+          if [[ -z "$CURRENT" || ! -f "$CURRENT" ]]; then
+            echo "::error::Missing current baseline. Commit datasets/baselines/latest_ragas.json or a *_ragas.json file."
+            exit 1
+          fi
+
+          if [[ "$CURRENT" == "$BASELINE" ]]; then
+            echo "::error::Current and baseline point to the same file: $CURRENT"
+            exit 1
+          fi
+
+          echo "baseline=$BASELINE" >> "$GITHUB_OUTPUT"
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "Using baseline: $BASELINE"
+          echo "Using current:  $CURRENT"
+
+      - name: Compare metrics and fail on regressions
+        run: |
+          python compare.py \
+            --baseline "${{ steps.files.outputs.baseline }}" \
+            --current "${{ steps.files.outputs.current }}"
