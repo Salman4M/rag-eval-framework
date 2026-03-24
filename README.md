@@ -153,6 +153,7 @@ python compare.py --baseline datasets/baselines/reference_ragas.json --current d
 ```
 
 If any metric regresses beyond the allowed drop (default `0.05`) or falls below minimum thresholds from `config.yaml`, the workflow fails.
+If `reference_ragas.json` is missing, CI automatically falls back to the previous newest `*_ragas.json` file as baseline.
 
 
 ## Phases

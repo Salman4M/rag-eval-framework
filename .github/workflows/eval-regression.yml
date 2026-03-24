@@ -32,11 +32,6 @@ jobs:
           BASELINE="datasets/baselines/reference_ragas.json"
           CURRENT="datasets/baselines/latest_ragas.json"
 
-          if [[ ! -f "$BASELINE" ]]; then
-            echo "::error::Missing reference baseline: $BASELINE"
-            exit 1
-          fi
-
           if [[ ! -f "$CURRENT" ]]; then
             # Fallback for timestamped files if latest_ragas.json is not present.
             CURRENT="$(ls -1 datasets/baselines/*_ragas.json 2>/dev/null | sort | tail -n 1 || true)"
@@ -47,7 +42,17 @@ jobs:
             exit 1
           fi
 
-          if [[ "$CURRENT" == "$BASELINE" ]]; then
+          if [[ ! -f "$BASELINE" ]]; then
+            echo "reference_ragas.json not found. Falling back to previous timestamped baseline."
+            PREVIOUS="$(ls -1 datasets/baselines/*_ragas.json 2>/dev/null | sort | grep -v -F "$CURRENT" | tail -n 1 || true)"
+            if [[ -z "$PREVIOUS" || ! -f "$PREVIOUS" ]]; then
+              echo "::error::No reference_ragas.json and no previous *_ragas.json found. Commit at least two Ragas baseline files."
+              exit 1
+            fi
+            BASELINE="$PREVIOUS"
+          fi
+
+          if [[ "$(realpath "$CURRENT")" == "$(realpath "$BASELINE")" ]]; then
             echo "::error::Current and baseline point to the same file: $CURRENT"
             exit 1
           fi
