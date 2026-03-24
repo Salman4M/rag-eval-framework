@@ -1,0 +1,138 @@
+{
+  "evaluator": "ragas",
+  "timestamp": "2026-03-20T16:14:51.662666+00:00",
+  "judge_model": "qwen2.5",
+  "total_cases": 5,
+  "passed": 5,
+  "failed": 0,
+  "averages": {
+    "faithfulness": 1.0,
+    "answer_relevancy": 0.9455,
+    "llm_context_precision_without_reference": 0.7278,
+    "context_recall": 0.8
+  },
+  "thresholds": {
+    "faithfulness": 0.7,
+    "answer_relevancy": 0.7,
+    "llm_context_precision_without_reference": 0.6,
+    "context_recall": 0.6
+  },
+  "passed_thresholds": {
+    "faithfulness": true,
+    "answer_relevancy": true,
+    "llm_context_precision_without_reference": true,
+    "context_recall": true
+  },
+  "results": [
+    {
+      "id": "case_7ec0cc83",
+      "question": "What was the release date of Python 3.7.0?",
+      "expected_answer": "September 2, 2018",
+      "actual_answer": "According to page 1 of the document:\n\nPython Tutorial, Release 3.7.0\nSeptember 02, 2018\n\nThe release date of Python 3.7.0 was September 02, 2018.",
+      "source_document": "python_tutorial.pdf",
+      "page_number": 1,
+      "difficulty": "factual",
+      "category": "overview",
+      "contexts": [
+        "Python Tutorial\nRelease 3.7.0\nGuido van Rossum\nand the Python development team\nSeptember 02, 2018\nPython Software Foundation\nEmail: docs@python.org",
+        "Python Tutorial, Release 3.7.0\n2 CONTENTS",
+        "Python Tutorial, Release 3.7.0\n18 Chapter 3. An Informal Introduction to Python",
+        "Python Tutorial, Release 3.7.0\n128 Appendix B. About these documents"
+      ],
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.997,
+        "llm_context_precision_without_reference": 1.0,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "id": "case_81dd47b7",
+      "question": "What does the Python interpreter do?",
+      "expected_answer": "It is a tool for executing Python code.",
+      "actual_answer": "According to page 9 of the document:\n\nThe interpreter can be used interactively, which makes it easy to experiment with features of the language, to write throw-away programs, or to test functions during bottom-up program development. It is also a handy desk calculator.\n\nThis indicates that the Python interpreter allows users to interactively execute Python code, experiment with language features, develop and test functions, and even use it as a desk calculator.",
+      "source_document": "python_tutorial.pdf",
+      "page_number": 3,
+      "difficulty": "factual",
+      "category": "using the python interpreter",
+      "contexts": [
+        "nteractive Python has an interactive interpreter which means you can enter statements and expressions\nat the interpreter prompt, immediately execute them and see their results. Just launch python with\nno arguments (possibly by selecting it from your computer’s main menu). It is a very powerful way to\ntest out new ideas or inspect modules and packages (remember help(x)).\ninterpreted Python is an interpreted language, as opposed to a compiled one, though the distinction can\nbe blurry because of the presence of the bytecode compiler. This means that source ﬁles can be run\ndirectly without explicitly creating an executable which is then run. Interpreted languages typically\n118 Appendix A. Glossary",
+        ". The interpreter can be used interactively, which makes it\neasy to experiment with features of the language, to write throw-away programs, or to test functions during\nbottom-up program development. It is also a handy desk calculator.\nPython enables programs to be written compactly and readably. Programs written in Python are typically\nmuch shorter than equivalent C, C++, or Java programs, for several reasons:\n• the high-level data types allow you to express complex operations in a single statement;\n• statement grouping is done by indentation instead of beginning and ending brackets;\n• no variable or argument declarations are necessary.\nPython is extensible: if you know how to program in C it is easy to add a new built-in function or module\nto the interpreter, either to perform critical operations at maximum speed, or to link Python programs to\nlibraries that may only be available in binary form (such as a vendor-speciﬁc graphics library). Once you\n3",
+        "t available; you’ll only be able to\nuse backspace to remove characters from the current line.\nThe interpreter operates somewhat like the Unix shell: when called with standard input connected to a tty\ndevice, it reads and executes commands interactively; when called with a ﬁle name argument or with a ﬁle\nas standard input, it reads and executes a script from that ﬁle.\nA second way of starting the interpreter is python -c command [arg] ..., which executes the statement(s)\nin command, analogous to the shell’s -c option. Since Python statements often contain spaces or other\ncharacters that are special to the shell, it is usually advised to quote command in its entirety with single\nquotes.\nSome Python modules are also useful as scripts. These can be invoked using python -m module [arg] ...,\nwhich executes the source ﬁle for module as if you had spelled out its full name on the command line.\nWhen a script ﬁle is used, it is sometimes useful to be able to run the script and enter interactive ",
+        "Python Tutorial, Release 3.7.0\nPython is an easy to learn, powerful programming language. It has eﬃcient high-level data structures and\na simple but eﬀective approach to object-oriented programming. Python’s elegant syntax and dynamic\ntyping, together with its interpreted nature, make it an ideal language for scripting and rapid application\ndevelopment in many areas on most platforms.\nThe Python interpreter and the extensive standard library are freely available in source or binary form for all\nmajor platforms from the Python Web site, https://www.python.org/, and may be freely distributed. The\nsame site also contains distributions of and pointers to many free third party Python modules, programs\nand tools, and additional documentation.\nThe Python interpreter is easily extended with new functions and data types implemented in C or C++\n(or other languages callable from C). Python is also suitable as an extension language for customizable\napplications.\nThis tutorial introduces the reader"
+      ],
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9395,
+        "llm_context_precision_without_reference": 0.75,
+        "context_recall": 0.0
+      }
+    },
+    {
+      "id": "case_2fc8e263",
+      "question": "How would you define a class in Python as described in the document?",
+      "expected_answer": "Classes are defined using the `class` keyword, typically with an indented block of code.",
+      "actual_answer": "According to page 78 of the document:\n\nClasses introduce a little bit of new syntax, three new object types, and some new semantics.\n9.3 A First Look at Classes\nClasses provide a means of bundling data and functionality together. Creating a new class creates a new type of object, allowing new instances of that type to be made. Each class instance can have attributes attached to it for maintaining its state. Class instances can also have methods (defined by its class) for modifying its state.\n\n9.3.1 Class Definition Syntax\nThe simplest form of class definition looks like this:\nclass ClassName:\n<statement-1>\n.\n.\n.\n<statement-N>\n\nTo define a class in Python, you would use the `class` keyword followed by the class name and a colon. The class body contains the attributes and methods defined for the class. For example:\n\n```python\nclass MyClass:\n    # Class definition goes here\n```\n\nThis defines a new class named `MyClass`.",
+      "source_document": "python_tutorial.pdf",
+      "page_number": 4,
+      "difficulty": "multi_hop",
+      "category": "Classes",
+      "contexts": [
+        "base class with the same name. Objects can contain arbitrary amounts and\nkinds of data. As is true for modules, classes partake of the dynamic nature of Python: they are created at\nruntime, and can be modiﬁed further after creation.\nIn C++ terminology, normally class members (including the data members) are public (except see below\nPrivate Variables ), and all member functions are virtual. As in Modula-3, there are no shorthands for\nreferencing the object’s members from its methods: the method function is declared with an explicit ﬁrst\nargument representing the object, which is provided implicitly by the call. As in Smalltalk, classes themselves\nare objects. This provides semantics for importing and renaming. Unlike C++ and Modula-3, built-in types\ncan be used as base classes for extension by the user. Also, like in C++, most built-in operators with special\nsyntax (arithmetic operators, subscripting etc.) can be redeﬁned for class instances.\n(Lacking universally accepted terminology to",
+        "Python Tutorial, Release 3.7.0\nYou can also see that there was no previous binding for spam before the global assignment.\n9.3 A First Look at Classes\nClasses introduce a little bit of new syntax, three new object types, and some new semantics.\n9.3.1 Class Deﬁnition Syntax\nThe simplest form of class deﬁnition looks like this:\nclass ClassName:\n<statement-1>\n.\n.\n.\n<statement-N>\nClass deﬁnitions, like function deﬁnitions ( def statements) must be executed before they have any eﬀect.\n(You could conceivably place a class deﬁnition in a branch of an if statement, or inside a function.)\nIn practice, the statements inside a class deﬁnition will usually be function deﬁnitions, but other statements\nare allowed, and sometimes useful — we’ll come back to this later. The function deﬁnitions inside a class\nnormally have a peculiar form of argument list, dictated by the calling conventions for methods — again,\nthis is explained later.\nWhen a class deﬁnition is entered, a new namespace is created, and ",
+        "CHAPTER\nNINE\nCLASSES\nClasses provide a means of bundling data and functionality together. Creating a new class creates a new type\nof object, allowing new instances of that type to be made. Each class instance can have attributes attached\nto it for maintaining its state. Class instances can also have methods (deﬁned by its class) for modifying its\nstate.\nCompared with other programming languages, Python’s class mechanism adds classes with a minimum of\nnew syntax and semantics. It is a mixture of the class mechanisms found in C++ and Modula-3. Python\nclasses provide all the standard features of Object Oriented Programming: the class inheritance mechanism\nallows multiple base classes, a derived class can override any methods of its base class or classes, and a\nmethod can call the method of a base class with the same name. Objects can contain arbitrary amounts and\nkinds of data. As is true for modules, classes partake of the dynamic nature of Python: they are created at\nruntime, and can be",
+        "Python Tutorial, Release 3.7.0\nClass instantiation uses function notation. Just pretend that the class object is a parameterless function\nthat returns a new instance of the class. For example (assuming the above class):\nx = MyClass()\ncreates a new instance of the class and assigns this object to the local variable x.\nThe instantiation operation (“calling” a class object) creates an empty object. Many classes like to create\nobjects with instances customized to a speciﬁc initial state. Therefore a class may deﬁne a special method\nnamed __init__(), like this:\ndef __init__(self):\nself.data = []\nWhen a class deﬁnes an __init__() method, class instantiation automatically invokes __init__() for the\nnewly-created class instance. So in this example, a new, initialized instance can be obtained by:\nx = MyClass()\nOf course, the __init__() method may have arguments for greater ﬂexibility. In that case, arguments given\nto the class instantiation operator are passed on to __init__(). For example,\n>>>"
+      ],
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.9215,
+        "llm_context_precision_without_reference": 0.6389,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "id": "case_226aca90",
+      "question": "How can Python be extended, and where can one find documentation about these extensions?",
+      "expected_answer": "Implemented in C or C++; documentation available in library-index and reference-index.",
+      "actual_answer": "According to page 9 of the document:\n\nThe Python interpreter is easily extended with new functions and data types implemented in C or C++ (or other languages callable from C). Python is also suitable as an extension language for customizable applications.\n\nFor more information on extending Python, you can refer to the documentation by browsing through the following sections:\n- `extending-index`: Explains how to extend Python with new functions and data types implemented in C or C++.\n- `c-api-index`: Provides detailed explanations of the Python/C API, which is useful for writing extensions.\n\nThese resources will help you understand how to integrate C or C++ code into your Python applications.",
+      "source_document": "python_tutorial.pdf",
+      "page_number": 7,
+      "difficulty": "reasoning",
+      "category": "extensions",
+      "contexts": [
+        "Python Tutorial, Release 3.7.0\nPython is an easy to learn, powerful programming language. It has eﬃcient high-level data structures and\na simple but eﬀective approach to object-oriented programming. Python’s elegant syntax and dynamic\ntyping, together with its interpreted nature, make it an ideal language for scripting and rapid application\ndevelopment in many areas on most platforms.\nThe Python interpreter and the extensive standard library are freely available in source or binary form for all\nmajor platforms from the Python Web site, https://www.python.org/, and may be freely distributed. The\nsame site also contains distributions of and pointers to many free third party Python modules, programs\nand tools, and additional documentation.\nThe Python interpreter is easily extended with new functions and data types implemented in C or C++\n(or other languages callable from C). Python is also suitable as an extension language for customizable\napplications.\nThis tutorial introduces the reader",
+        "CHAPTER\nTHIRTEEN\nWHAT NOW?\nReading this tutorial has probably reinforced your interest in using Python — you should be eager to apply\nPython to solving your real-world problems. Where should you go to learn more?\nThis tutorial is part of Python’s documentation set. Some other documents in the set are:\n• library-index:\nYou should browse through this manual, which gives complete (though terse) reference material about\ntypes, functions, and the modules in the standard library. The standard Python distribution includes\na lot of additional code. There are modules to read Unix mailboxes, retrieve documents via HTTP,\ngenerate random numbers, parse command-line options, write CGI programs, compress data, and many\nother tasks. Skimming through the Library Reference will give you an idea of what’s available.\n• installing-index explains how to install additional modules written by other Python users.\n• reference-index: A detailed explanation of Python’s syntax and semantics. It’s heavy reading, b",
+        "nctions and data types implemented in C or C++\n(or other languages callable from C). Python is also suitable as an extension language for customizable\napplications.\nThis tutorial introduces the reader informally to the basic concepts and features of the Python language\nand system. It helps to have a Python interpreter handy for hands-on experience, but all examples are\nself-contained, so the tutorial can be read oﬀ-line as well.\nFor a description of standard objects and modules, see library-index. reference-index gives a more formal\ndeﬁnition of the language. To write extensions in C or C++, read extending-index and c-api-index. There\nare also several books covering Python in depth.\nThis tutorial does not attempt to be comprehensive and cover every single feature, or even every commonly\nused feature. Instead, it introduces many of Python’s most noteworthy features, and will give you a good\nidea of the language’s ﬂavor and style. After reading it, you will be able to read and write Pyth",
+        "Python Tutorial, Release 3.7.0\n128 Appendix B. About these documents"
+      ],
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 0.8695,
+        "llm_context_precision_without_reference": 1.0,
+        "context_recall": 1.0
+      }
+    },
+    {
+      "id": "case_3211c5a4",
+      "question": "Why is Python considered better than C/C++/Java in terms of development time?",
+      "expected_answer": "Python has high-level data types and an interpreted nature, making it faster to develop.",
+      "actual_answer": "According to page 9 of the document:\n\nPython is simpler to use, available on Windows, Mac OS X, and Unix operating systems, and will help you get the job done more quickly. Python is a real programming language, offering much more structure and support for large programs than shell scripts or batch files can offer. On the other hand, Python also offers much more error checking than C, and, being a very-high-level language, it has high-level data types built in, such as flexible arrays and dictionaries.\n\nThis indicates that Python is considered better than C/C++/Java in terms of development time because:\n\n1. **Simplicity**: Python is easier to learn and use compared to C/C++ and Java.\n2. **Cross-Platform Support**: It works on multiple operating systems like Windows, Mac OS X, and Unix.\n3. **Error Checking**: Python has built-in error checking which can reduce debugging time.\n4. **High-Level Data Types**: Features like flexible arrays and dictionaries make it easier to write concise and readable code.\n\nThese factors contribute to faster development times when using Python compared to C/C++/Java for many tasks.",
+      "source_document": "python_tutorial.pdf",
+      "page_number": 9,
+      "difficulty": "reasoning",
+      "category": "advantages",
+      "contexts": [
+        ". The interpreter can be used interactively, which makes it\neasy to experiment with features of the language, to write throw-away programs, or to test functions during\nbottom-up program development. It is also a handy desk calculator.\nPython enables programs to be written compactly and readably. Programs written in Python are typically\nmuch shorter than equivalent C, C++, or Java programs, for several reasons:\n• the high-level data types allow you to express complex operations in a single statement;\n• statement grouping is done by indentation instead of beginning and ending brackets;\n• no variable or argument declarations are necessary.\nPython is extensible: if you know how to program in C it is easy to add a new built-in function or module\nto the interpreter, either to perform critical operations at maximum speed, or to link Python programs to\nlibraries that may only be available in binary form (such as a vendor-speciﬁc graphics library). Once you\n3",
+        "nguage for your\napplication.\nPython is just the language for you.\nYou could write a Unix shell script or Windows batch ﬁles for some of these tasks, but shell scripts are best\nat moving around ﬁles and changing text data, not well-suited for GUI applications or games. You could\nwrite a C/C++/Java program, but it can take a lot of development time to get even a ﬁrst-draft program.\nPython is simpler to use, available on Windows, Mac OS X, and Unix operating systems, and will help you\nget the job done more quickly.\nPython is simple to use, but it is a real programming language, oﬀering much more structure and support\nfor large programs than shell scripts or batch ﬁles can oﬀer. On the other hand, Python also oﬀers much\nmore error checking than C, and, being a very-high-level language , it has high-level data types built in, such\nas ﬂexible arrays and dictionaries. Because of its more general data types Python is applicable to a much\nlarger problem domain than Awk or even Perl, yet many th",
+        " high-level data types built in, such\nas ﬂexible arrays and dictionaries. Because of its more general data types Python is applicable to a much\nlarger problem domain than Awk or even Perl, yet many things are at least as easy in Python as in those\nlanguages.\nPython allows you to split your program into modules that can be reused in other Python programs. It\ncomes with a large collection of standard modules that you can use as the basis of your programs — or as\nexamples to start learning to program in Python. Some of these modules provide things like ﬁle I/O, system\ncalls, sockets, and even interfaces to graphical user interface toolkits like Tk.\nPython is an interpreted language, which can save you considerable time during program development\nbecause no compilation and linking is necessary. The interpreter can be used interactively, which makes it\neasy to experiment with features of the language, to write throw-away programs, or to test functions during\nbottom-up program development. I",
+        "CHAPTER\nONE\nWHETTING YOUR APPETITE\nIf you do much work on computers, eventually you ﬁnd that there’s some task you’d like to automate. For\nexample, you may wish to perform a search-and-replace over a large number of text ﬁles, or rename and\nrearrange a bunch of photo ﬁles in a complicated way. Perhaps you’d like to write a small custom database,\nor a specialized GUI application, or a simple game.\nIf you’re a professional software developer, you may have to work with several C/C++/Java libraries but\nﬁnd the usual write/compile/test/re-compile cycle is too slow. Perhaps you’re writing a test suite for such\na library and ﬁnd writing the testing code a tedious task. Or maybe you’ve written a program that could\nuse an extension language, and you don’t want to design and implement a whole new language for your\napplication.\nPython is just the language for you.\nYou could write a Unix shell script or Windows batch ﬁles for some of these tasks, but shell scripts are best\nat moving around ﬁles an"
+      ],
+      "scores": {
+        "faithfulness": 1.0,
+        "answer_relevancy": 1.0,
+        "llm_context_precision_without_reference": 0.25,
+        "context_recall": 1.0
+      }
+    }
+  ]
+}

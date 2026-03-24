@@ -23,6 +23,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install pyyaml
 
+      - name: Prepare config
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! -f "config.yaml" ]]; then
+            cp config.example.yaml config.yaml
+            echo "config.yaml was missing; generated from config.example.yaml for CI compare."
+          fi
+
       - name: Select baseline files
         id: files
         shell: bash
