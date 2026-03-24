@@ -4,6 +4,9 @@ plan.md
 __pycache__/
 *.pyc
 datasets/raw/
+datasets/baselines/*
+!datasets/baselines/reference_ragas.json
+!datasets/baselines/latest_ragas.json
 datasets/.reviewer_progress.json
 .env
 config.yaml
